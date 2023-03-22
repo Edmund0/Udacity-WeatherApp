@@ -3,7 +3,6 @@ projectData = {};
 
 
 
-
 // Require Express to run server and routes
 const express = require('express');
 
@@ -24,15 +23,17 @@ const app = express();
 app.use(express.static('website'));
 
 
+
 // Setup Server
 port = 8000;
+host = 'localhost'; // For testing only!!!
 function listening() {  
         const host = server.address().address  
         const port = server.address().port  
         console.log("Example app listening at http://%s:%s", host, port);
     }
 
-const server = app.listen(port, listening);
+const server = app.listen(port, host, listening);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
