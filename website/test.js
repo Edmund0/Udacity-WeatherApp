@@ -82,20 +82,3 @@ let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
 
     document.getElementById('generate').addEventListener('click', fetchData);
 
-
-    /***************************************/
-    /* HELPER FUNCTION TO GET PROJECT DATA */
-    /***************************************/
-
-    const getProjectData = async () => {
-
-        // Determines the coordinate that corresponds to the zip code
-        const geoResponse = await fetch ('/projectData');   
-        try {
-            const data = await geoResponse.json();
-            return data[data.length-1];
-        } catch (error) {
-            return undefined;
-        }
-
-    }
