@@ -44,11 +44,7 @@ const server = app.listen(port, host, listening);       // For testing only (DEL
     // Add a POST route that adds incoming data to the projectData object. (Confusion)
     app.post('/projectData', function (request, response) {
 
-        let newEntry = {
-            temperature: request.body.temperature,
-            date: request.body.date,
-            userResponse: request.userResponse
-        }
+        let newEntry = request.body;
 
         projectData.push(newEntry); 
         console.log(projectData);

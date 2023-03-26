@@ -8,6 +8,32 @@ let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
 
 
 
+    /***************************************/
+    /* HELPER FUNCTION TO GET PROJECT DATA */
+    /***************************************/
+
+    const getProjectData = async () => {
+
+        // Determines the coordinate that corresponds to the zip code
+        const request = await fetch ('/projectData');   
+        try {
+            const data = await request.json();
+            const recentData = data[data.length-1];
+            console.log(recentData);
+
+            // Write latest data to to DOM elements
+            document.getElementById('temp').innerHTML = Math.round(recentData.temperature)+ 'degrees';
+            document.getElementById('content').innerHTML = recentData.userResponse;
+            document.getElementById('date').innerHTML = recentData.date;
+
+        } catch (error) {
+            return undefined;
+        }
+
+    }
+
+
+
     /*******************************************/
     /* HELPER FUNCTION TO GET TEMPERATURE DATA */
     /*******************************************/
@@ -58,33 +84,10 @@ let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
             },
             body: JSON.stringify(data),  // Body data type must match "Content-Type" header
         }); 
-    
+
+        //  getProjectData() WHY WOULD THIS FUNCTION NOT RUN IF IT IS PLACED HERE?
+
     };
-
-
-
-    /***************************************/
-    /* HELPER FUNCTION TO GET PROJECT DATA */
-    /***************************************/
-
-    const getProjectData = async () => {
-
-        // Determines the coordinate that corresponds to the zip code
-        const request = await fetch ('/projectData');   
-        try {
-            const data = await request.json();
-            const recentData = data[data.length-1];
-
-            // Write latest data to to DOM elements
-            document.getElementById('temp').innerHTML = Math.round(recentData.temperature)+ 'degrees';
-            document.getElementById('content').innerHTML = recentData.userResponse;
-            document.getElementById('date').innerHTML = recentData.date;
-
-        } catch (error) {
-            return undefined;
-        }
-
-    }
 
 
 
@@ -102,7 +105,7 @@ let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
         zipCode = zipCode.replace(/\s+/g, '');                                  //Remove the whitespaces
         getData(baseURL, geoLocation, zipCode, apiKey)
             .then(temperature => postData('/projectData', {temperature: temperature, date: newDate, userResponse: userResponse}))
-            .then(() => getProjectData());
+            .then(getProjectData());
 
     };
 
