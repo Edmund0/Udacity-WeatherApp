@@ -106,6 +106,12 @@ const apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
         getData(baseURL, geoLocation, zipCode, apiKey)
             .then(temperature => postData('/projectData', {temperature: temperature, date: newDate, userResponse: userResponse}).then(getProjectData()));
 
+        /* THIS CODE IS NOT IN ORDER
+        getData(baseURL, geoLocation, zipCode, apiKey)
+            .then(temperature => postData('/projectData', {temperature: temperature, date: newDate, userResponse: userResponse}))
+            .then(getProjectData());
+        */
+
     };
 
     document.getElementById('generate').addEventListener('click', fetchData);
