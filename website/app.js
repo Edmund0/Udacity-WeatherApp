@@ -61,25 +61,6 @@ let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
     
     };
 
-    let fetchData = (event) => {
-
-        // Create a new date instance dynamically with JS
-        let d = new Date();
-        let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
-
-        // Obtains User Response
-        let userResponse = document.getElementById('feelings').value;
-
-        // Obtains Temperature
-        let zipCode = document.getElementById('zip').value;
-        zipCode = zipCode.replace(/\s+/g, '');                                  //Remove the whitespaces
-        getData(baseURL, geoLocation, zipCode, apiKey)
-            .then(temperature => postData('/projectData', {temperature: temperature, date: newDate, userResponse: userResponse}))
-            .then(() => getProjectData());
-
-    };
-
-    document.getElementById('generate').addEventListener('click', fetchData);
 
 
     /***************************************/
@@ -104,3 +85,25 @@ let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
         }
 
     }
+
+
+
+    let fetchData = (event) => {
+
+        // Create a new date instance dynamically with JS
+        let d = new Date();
+        let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+
+        // Obtains User Response
+        let userResponse = document.getElementById('feelings').value;
+
+        // Obtains Temperature
+        let zipCode = document.getElementById('zip').value;
+        zipCode = zipCode.replace(/\s+/g, '');                                  //Remove the whitespaces
+        getData(baseURL, geoLocation, zipCode, apiKey)
+            .then(temperature => postData('/projectData', {temperature: temperature, date: newDate, userResponse: userResponse}))
+            .then(() => getProjectData());
+
+    };
+
+    document.getElementById('generate').addEventListener('click', fetchData);
