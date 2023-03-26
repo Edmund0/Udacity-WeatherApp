@@ -61,8 +61,6 @@ let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
     
     };
 
-
-
     let fetchData = (event) => {
 
         // Create a new date instance dynamically with JS
@@ -76,7 +74,8 @@ let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
         let zipCode = document.getElementById('zip').value;
         zipCode = zipCode.replace(/\s+/g, '');                                  //Remove the whitespaces
         getData(baseURL, geoLocation, zipCode, apiKey)
-            .then(temperature => postData('/projectData', {temperature: temperature, date: newDate, userResponse: userResponse}));
+            .then(temperature => postData('/projectData', {temperature: temperature, date: newDate, userResponse: userResponse}))
+            .then(() => getProjectData());
 
     };
 
@@ -90,10 +89,16 @@ let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
     const getProjectData = async () => {
 
         // Determines the coordinate that corresponds to the zip code
-        const geoResponse = await fetch ('/projectData');   
+        const request = await fetch ('/projectData');   
         try {
-            const data = await geoResponse.json();
-            return data[data.length-1];
+            const data = await request.json();
+            const recentData = data[data.length-1];
+
+            // Write latest data to to DOM elements
+            document.getElementById('temp').innerHTML = Math.round(recentData.temperature)+ 'degrees';
+            document.getElementById('content').innerHTML = recentData.userResponse;
+            document.getElementById('date').innerHTML = recentData.date;
+
         } catch (error) {
             return undefined;
         }
