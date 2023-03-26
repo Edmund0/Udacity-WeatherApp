@@ -2,9 +2,9 @@
 
 /* GLOBAL VARIABLES */
 // API Credential Variables
-let baseURL = 'https://api.openweathermap.org/data/2.5/weather?';
-let geoLocation = 'https://api.openweathermap.org/geo/1.0/zip?zip=';
-let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
+const baseURL = 'https://api.openweathermap.org/data/2.5/weather?';
+const geoLocation = 'https://api.openweathermap.org/geo/1.0/zip?zip=';
+const apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
 
 
 
@@ -18,7 +18,7 @@ let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
         const request = await fetch ('/projectData');   
         try {
             const data = await request.json();
-            const recentData = data[data.length-1];
+            const recentData = data;
             console.log(recentData);
 
             // Write latest data to to DOM elements
@@ -85,7 +85,7 @@ let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
             body: JSON.stringify(data),  // Body data type must match "Content-Type" header
         }); 
 
-        //  getProjectData() WHY WOULD THIS FUNCTION NOT RUN IF IT IS PLACED HERE?
+        //  getProjectData() WHY WOULD THIS FUNCTION NOT RUN IF IT IS PLACED HERE? PLEASE HELP
 
     };
 
@@ -95,7 +95,7 @@ let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
 
         // Create a new date instance dynamically with JS
         let d = new Date();
-        let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+        let newDate = (d.getMonth() + 1) +'.'+ d.getDate()+'.'+ d.getFullYear();
 
         // Obtains User Response
         let userResponse = document.getElementById('feelings').value;
@@ -104,8 +104,7 @@ let apiKey = '&appid=9d1405c9e963ad78ac9e8cef6e20ffd0&units=imperial';
         let zipCode = document.getElementById('zip').value;
         zipCode = zipCode.replace(/\s+/g, '');                                  //Remove the whitespaces
         getData(baseURL, geoLocation, zipCode, apiKey)
-            .then(temperature => postData('/projectData', {temperature: temperature, date: newDate, userResponse: userResponse}))
-            .then(getProjectData());
+            .then(temperature => postData('/projectData', {temperature: temperature, date: newDate, userResponse: userResponse}).then(getProjectData()));
 
     };
 

@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-let projectData = [];
+let projectData = {};
 
 
 
@@ -46,7 +46,7 @@ const server = app.listen(port, host, listening);       // For testing only (DEL
 
         let newEntry = request.body;
 
-        projectData.push(newEntry); 
+        projectData = newEntry; 
         console.log(projectData);
      })
 
